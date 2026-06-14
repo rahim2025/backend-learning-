@@ -1,6 +1,6 @@
 # JavaScript Scope and Variables
 
-This folder contains backend interview notes about JavaScript scope, variable declarations, hoisting, TDZ, `const`, and lexical scoping.
+This folder contains backend interview notes about JavaScript scope, variable declarations, hoisting, TDZ, `const`, lexical scoping, closures, and `this`.
 
 Scope and variables are important for backend development because they affect how data is shared, hidden, updated, and captured inside functions, route handlers, callbacks, and modules.
 
@@ -12,8 +12,10 @@ Scope and variables are important for backend development because they affect ho
 4. [Temporal Dead Zone](04-tdz/README.md)
 5. [`const` Does Not Mean Immutable](05-const-mutability/README.md)
 6. [Lexical Scoping](06-lexical-scoping/README.md)
-7. [Interview Questions](07-interview-questions/interview-questions.md)
-8. [Cheat Sheet](08-cheat-sheet/README.md)
+7. [Closures](07-closures/README.md)
+8. [`this`](08-this/README.md)
+9. [Interview Questions](09-interview-questions/interview-questions.md)
+10. [Cheat Sheet](10-cheat-sheet/README.md)
 
 ## 1. Scope
 
@@ -222,6 +224,135 @@ It does not use the `value` inside `run()` just because `run()` called it.
 
 This matters in backend JavaScript when callbacks and helper functions read variables from outer scopes.
 
+## 7. Closures
+
+A closure is a function together with the outer variables it remembers.
+
+```txt
+Closure = function + remembered outer variables
+```
+
+Closures come from lexical scoping.
+
+```js
+function createCounter() {
+  let count = 0;
+
+  return function increment() {
+    count++;
+    return count;
+  };
+}
+
+const counter = createCounter();
+
+counter(); // 1
+counter(); // 2
+```
+
+`increment()` remembers `count` even after `createCounter()` has finished running.
+
+Closures are useful because they:
+
+- Preserve state.
+- Create private variables.
+- Allow callbacks to remember outer variables.
+- Let each function call create a new remembered environment.
+
+Each function call can create a new closure:
+
+```js
+const counterA = createCounter();
+const counterB = createCounter();
+
+counterA(); // 1
+counterA(); // 2
+counterB(); // 1
+```
+
+`counterA` and `counterB` have separate `count` variables.
+
+Classic async loop trap:
+
+```js
+for (var i = 1; i <= 3; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, 1000);
+}
+
+// 4
+// 4
+// 4
+```
+
+`var` shares one function-scoped variable.
+
+With `let`:
+
+```js
+for (let i = 1; i <= 3; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, 1000);
+}
+
+// 1
+// 2
+// 3
+```
+
+`let` creates a new variable for each loop iteration.
+
+## 8. `this`
+
+`this` is a special keyword whose value depends on how a function is called.
+
+```txt
+this is decided by the call site, not where the function is written.
+```
+
+Global `this` depends on the environment:
+
+```js
+console.log(this); // browser script: window
+console.log(this); // Node CommonJS file: {}
+```
+
+Inside an object method, `this` points to the object before the dot:
+
+```js
+const user = {
+  name: "Rahim",
+  greet() {
+    return `Hello, ${this.name}`;
+  }
+};
+
+user.greet(); // "Hello, Rahim"
+```
+
+`this` can be lost when a method is separated from its object:
+
+```js
+const greetFn = user.greet;
+
+greetFn(); // loses this
+```
+
+Arrow functions do not have their own `this`. They capture `this` from the surrounding scope.
+
+```js
+const user = {
+  name: "Rahim",
+  greet: () => this.name
+};
+
+user.greet(); // usually undefined
+```
+
+For object methods, prefer normal method syntax. For nested callbacks inside methods, arrow functions are often useful because they preserve the outer `this`.
+
 ## Interview Summary
 
 If an interviewer asks about scope and variables, a strong answer should mention:
@@ -236,4 +367,9 @@ If an interviewer asks about scope and variables, a strong answer should mention
 - Function expressions are not fully available until assignment.
 - `const` prevents reassignment, not object mutation.
 - Lexical scoping is based on where a function is written.
-
+- Closures are functions that remember outer variables.
+- Closures preserve state and can create private variables.
+- `var` in async loops shares one variable, while `let` creates a new binding per iteration.
+- `this` usually depends on how a function is called.
+- Arrow functions do not have their own `this`.
+- Object methods can lose `this` when passed as callbacks.

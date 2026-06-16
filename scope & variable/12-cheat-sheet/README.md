@@ -224,3 +224,199 @@ const user = {
 
 user.outer(); // "Rahim"
 ```
+
+## `call`, `apply`, and `bind`
+
+They let us control `this` for normal functions.
+
+```js
+function showName() {
+  console.log(this.name);
+}
+
+const user = {
+  name: "Rahim"
+};
+
+showName.call(user); // "Rahim"
+```
+
+## `call()`
+
+Sets `this` and calls immediately.
+
+Arguments are passed one by one.
+
+```js
+function introduce(city, country) {
+  console.log(`${this.name} lives in ${city}, ${country}`);
+}
+
+introduce.call(user, "Dhaka", "Bangladesh");
+```
+
+Rule:
+
+```js
+functionName.call(thisValue, arg1, arg2);
+```
+
+## `apply()`
+
+Sets `this` and calls immediately.
+
+Arguments are passed as an array.
+
+```js
+introduce.apply(user, ["Dhaka", "Bangladesh"]);
+```
+
+Rule:
+
+```js
+functionName.apply(thisValue, [arg1, arg2]);
+```
+
+## `bind()`
+
+Returns a new function with fixed `this`.
+
+Does not call immediately.
+
+```js
+const boundIntroduce = introduce.bind(user);
+
+boundIntroduce("Dhaka", "Bangladesh");
+```
+
+Rule:
+
+```js
+const newFn = functionName.bind(thisValue);
+newFn();
+```
+
+## Main Difference
+
+| Method | Main behavior |
+| --- | --- |
+| `call()` | Calls immediately, args one by one |
+| `apply()` | Calls immediately, args as array |
+| `bind()` | Returns a new function |
+
+## `bind(null)`
+
+Use `bind(null)` when `this` is not needed and you want to pre-fill arguments.
+
+```js
+function multiply(a, b) {
+  return a * b;
+}
+
+const double = multiply.bind(null, 2);
+
+double(5); // 10
+```
+
+For functions that use `this`, strict mode keeps `this` as `null`:
+
+```js
+"use strict";
+
+function showThis() {
+  return this;
+}
+
+showThis.bind(null)(); // null
+```
+
+## Node.js Event Loop Order
+
+Useful interview order:
+
+```txt
+1. Synchronous code
+2. process.nextTick()
+3. Promise microtasks / async-await continuation
+4. Timers: setTimeout, setInterval
+5. I/O callbacks
+6. Check phase: setImmediate()
+```
+
+## Synchronous Code
+
+```js
+console.log("A");
+
+setTimeout(() => {
+  console.log("B");
+}, 0);
+
+console.log("C");
+
+// A
+// C
+// B
+```
+
+## `process.nextTick()`
+
+Runs before Promise microtasks in Node.js.
+
+```js
+process.nextTick(() => {
+  console.log("nextTick");
+});
+
+Promise.resolve().then(() => {
+  console.log("promise");
+});
+
+// nextTick
+// promise
+```
+
+## Promise Microtasks / `async-await`
+
+Code after `await` continues as a microtask.
+
+```js
+async function run() {
+  console.log("A");
+  await Promise.resolve();
+  console.log("B");
+}
+
+run();
+console.log("C");
+
+// A
+// C
+// B
+```
+
+## Timers
+
+`setTimeout` and `setInterval` run in the timers phase.
+
+```js
+setTimeout(() => {
+  console.log("timeout");
+}, 0);
+```
+
+## I/O Callbacks
+
+I/O callbacks come from async operations like file system reads, network events, streams, and database calls.
+
+## Check Phase
+
+`setImmediate()` runs in the check phase.
+
+```js
+setImmediate(() => {
+  console.log("immediate");
+});
+```
+
+Top-level `setTimeout(0)` vs `setImmediate()` order can vary. Inside I/O callbacks, `setImmediate()` usually runs first.

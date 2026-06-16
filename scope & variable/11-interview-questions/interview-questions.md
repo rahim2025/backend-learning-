@@ -308,3 +308,243 @@ user.outer(); // TypeError in strict mode, or undefined
 ```
 
 Use an arrow function when the nested function should keep the outer method's `this`.
+
+## Q: Why do we need `call`, `apply`, and `bind`?
+
+Sometimes a function is not inside an object, but we still want to run it with a specific `this`.
+
+```js
+function showName() {
+  console.log(this.name);
+}
+
+const user = {
+  name: "Rahim"
+};
+
+showName.call(user); // "Rahim"
+```
+
+`call(user)` means run the function and make `this` equal to `user`.
+
+## Q: What does `call()` do?
+
+`call()` sets `this` and calls the function immediately. Arguments are passed one by one.
+
+```js
+function introduce(city, country) {
+  console.log(`${this.name} lives in ${city}, ${country}`);
+}
+
+const user = {
+  name: "Rahim"
+};
+
+introduce.call(user, "Dhaka", "Bangladesh");
+```
+
+Output:
+
+```txt
+Rahim lives in Dhaka, Bangladesh
+```
+
+## Q: What does `apply()` do?
+
+`apply()` sets `this` and calls the function immediately. Arguments are passed as an array.
+
+```js
+introduce.apply(user, ["Dhaka", "Bangladesh"]);
+```
+
+Output:
+
+```txt
+Rahim lives in Dhaka, Bangladesh
+```
+
+## Q: What does `bind()` do?
+
+`bind()` does not call the function immediately. It returns a new function with fixed `this`.
+
+```js
+const boundIntroduce = introduce.bind(user);
+
+boundIntroduce("Dhaka", "Bangladesh");
+```
+
+Output:
+
+```txt
+Rahim lives in Dhaka, Bangladesh
+```
+
+## Q: What is the difference between `call`, `apply`, and `bind`?
+
+`call` calls immediately and takes arguments one by one. `apply` calls immediately and takes arguments as an array. `bind` returns a new function and does not call immediately.
+
+## Q: What does `bind(null)` mean?
+
+`bind(null)` usually means the function does not need `this`, and we only want to pre-fill arguments.
+
+```js
+function multiply(a, b) {
+  return a * b;
+}
+
+const double = multiply.bind(null, 2);
+
+double(5); // 10
+```
+
+Here, `null` is a placeholder for `this`, and `2` is fixed as the first argument.
+
+If the function uses `this`, then in strict mode `this` will be `null`.
+
+```js
+"use strict";
+
+function showThis() {
+  return this;
+}
+
+const bound = showThis.bind(null);
+
+bound(); // null
+```
+
+## Q: Do `call`, `apply`, and `bind` change `this` for arrow functions?
+
+No. Arrow functions do not have their own `this`, so `call`, `apply`, and `bind` cannot change their `this`.
+
+## Q: What is the basic execution order in Node.js?
+
+A useful interview order is:
+
+```txt
+1. Synchronous code
+2. process.nextTick()
+3. Promise microtasks / async-await continuation
+4. Timers: setTimeout, setInterval
+5. I/O callbacks
+6. Check phase: setImmediate()
+```
+
+## Q: Does synchronous code run before async callbacks?
+
+Yes. Synchronous code runs first because it is on the call stack.
+
+```js
+console.log("A");
+
+setTimeout(() => {
+  console.log("B");
+}, 0);
+
+console.log("C");
+```
+
+Output:
+
+```txt
+A
+C
+B
+```
+
+## Q: What is `process.nextTick()`?
+
+`process.nextTick()` is Node.js-specific. It runs after the current synchronous code finishes, before Promise microtasks.
+
+```js
+console.log("start");
+
+process.nextTick(() => {
+  console.log("nextTick");
+});
+
+Promise.resolve().then(() => {
+  console.log("promise");
+});
+
+console.log("end");
+```
+
+Output:
+
+```txt
+start
+end
+nextTick
+promise
+```
+
+## Q: Where do Promise callbacks and `async/await` continuations run?
+
+Promise callbacks and code after `await` run as microtasks.
+
+```js
+async function run() {
+  console.log("A");
+  await Promise.resolve();
+  console.log("B");
+}
+
+run();
+console.log("C");
+```
+
+Output:
+
+```txt
+A
+C
+B
+```
+
+## Q: Are `setTimeout` and `setInterval` microtasks?
+
+No. They are timer callbacks. They run in the timers phase after synchronous code and microtasks finish.
+
+## Q: What are I/O callbacks?
+
+I/O callbacks come from operations like file reads, network events, streams, database calls, and other async system operations.
+
+```js
+const fs = require("fs");
+
+fs.readFile("file.txt", () => {
+  console.log("I/O callback");
+});
+
+console.log("sync");
+```
+
+The synchronous log runs first. The I/O callback runs later when the operation finishes.
+
+## Q: What is `setImmediate()`?
+
+`setImmediate()` schedules a callback for the check phase of the Node.js event loop.
+
+```js
+setImmediate(() => {
+  console.log("immediate");
+});
+
+console.log("sync");
+```
+
+Output:
+
+```txt
+sync
+immediate
+```
+
+## Q: Which runs first: `setTimeout(0)` or `setImmediate()`?
+
+At the top level, the order can vary. Inside an I/O callback, `setImmediate()` usually runs before `setTimeout(0)`.
+
+## Q: Give an interview answer for Node.js event loop order.
+
+In Node.js, synchronous code runs first. Then Node processes `process.nextTick()` callbacks, then Promise microtasks and `async/await` continuations. After that, event loop phases handle timers, I/O callbacks, and the check phase where `setImmediate()` runs.

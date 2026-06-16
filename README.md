@@ -25,6 +25,16 @@ Notes:
 - [Type Coercion Interview Questions](coercion/16-interview-questions/interview-questions.md)
 - [Type Coercion Cheat Sheet](coercion/17-cheat-sheet/README.md)
 
+### Promises and async/await
+
+Promises and `async/await` are important for backend JavaScript because most server-side work is asynchronous: database calls, API requests, file reads, and network operations.
+
+Notes:
+
+- [Promises and async/await](promise%20&%20async-await/)
+- [Promise Interview Questions](promise%20&%20async-await/08-interview-questions/interview-questions.md)
+- [Promise Cheat Sheet](promise%20&%20async-await/09-cheat-sheet/README.md)
+
 ## Why I Am Building This
 
 I am using this repository to prepare for backend software engineering interviews and to improve my practical JavaScript backend skills.
@@ -51,4 +61,3 @@ Software backend development with JavaScript
 ```
 
 More backend topics will be added as I continue learning.
-

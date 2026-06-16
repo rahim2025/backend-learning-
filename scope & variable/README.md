@@ -1,6 +1,6 @@
 # JavaScript Scope and Variables
 
-This folder contains backend interview notes about JavaScript scope, variable declarations, hoisting, TDZ, `const`, lexical scoping, closures, and `this`.
+This folder contains backend interview notes about JavaScript scope, variable declarations, hoisting, TDZ, `const`, lexical scoping, closures, `this`, `call`/`apply`/`bind`, and Node.js event loop ordering.
 
 Scope and variables are important for backend development because they affect how data is shared, hidden, updated, and captured inside functions, route handlers, callbacks, and modules.
 
@@ -14,8 +14,10 @@ Scope and variables are important for backend development because they affect ho
 6. [Lexical Scoping](06-lexical-scoping/README.md)
 7. [Closures](07-closures/README.md)
 8. [`this`](08-this/README.md)
-9. [Interview Questions](09-interview-questions/interview-questions.md)
-10. [Cheat Sheet](10-cheat-sheet/README.md)
+9. [`call`, `apply`, and `bind`](09-call-apply-bind/README.md)
+10. [Node.js Event Loop Order](10-event-loop-order/README.md)
+11. [Interview Questions](11-interview-questions/interview-questions.md)
+12. [Cheat Sheet](12-cheat-sheet/README.md)
 
 ## 1. Scope
 
@@ -353,6 +355,118 @@ user.greet(); // usually undefined
 
 For object methods, prefer normal method syntax. For nested callbacks inside methods, arrow functions are often useful because they preserve the outer `this`.
 
+## 9. `call`, `apply`, and `bind`
+
+`call`, `apply`, and `bind` let us control `this` for normal functions.
+
+```js
+function showName() {
+  console.log(this.name);
+}
+
+const user = {
+  name: "Rahim"
+};
+
+showName.call(user); // "Rahim"
+```
+
+`call()` sets `this` and calls the function immediately:
+
+```js
+function introduce(city, country) {
+  console.log(`${this.name} lives in ${city}, ${country}`);
+}
+
+introduce.call(user, "Dhaka", "Bangladesh");
+```
+
+`apply()` is like `call()`, but arguments are passed as an array:
+
+```js
+introduce.apply(user, ["Dhaka", "Bangladesh"]);
+```
+
+`bind()` returns a new function with fixed `this`:
+
+```js
+const boundIntroduce = introduce.bind(user);
+
+boundIntroduce("Dhaka", "Bangladesh");
+```
+
+Main difference:
+
+| Method | Behavior |
+| --- | --- |
+| `call()` | Calls immediately, args one by one |
+| `apply()` | Calls immediately, args as array |
+| `bind()` | Returns a new function, does not call immediately |
+
+`bind(null)` is often used when the function does not need `this`, but we want to pre-fill arguments:
+
+```js
+function multiply(a, b) {
+  return a * b;
+}
+
+const double = multiply.bind(null, 2);
+
+double(5); // 10
+```
+
+## 10. Node.js Event Loop Order
+
+Node.js uses the event loop to schedule asynchronous callbacks.
+
+A useful backend interview order:
+
+```txt
+1. Synchronous code
+2. process.nextTick()
+3. Promise microtasks / async-await continuation
+4. Timers: setTimeout, setInterval
+5. I/O callbacks
+6. Check phase: setImmediate()
+```
+
+Example:
+
+```js
+console.log("sync 1");
+
+setTimeout(() => {
+  console.log("timeout");
+}, 0);
+
+setImmediate(() => {
+  console.log("immediate");
+});
+
+Promise.resolve().then(() => {
+  console.log("promise");
+});
+
+process.nextTick(() => {
+  console.log("nextTick");
+});
+
+console.log("sync 2");
+```
+
+Common output:
+
+```txt
+sync 1
+sync 2
+nextTick
+promise
+timeout
+immediate
+```
+
+At top level, `setTimeout(0)` and `setImmediate()` order can vary. Inside I/O callbacks, `setImmediate()` usually runs before `setTimeout(0)`.
+
 ## Interview Summary
 
 If an interviewer asks about scope and variables, a strong answer should mention:
@@ -373,3 +487,10 @@ If an interviewer asks about scope and variables, a strong answer should mention
 - `this` usually depends on how a function is called.
 - Arrow functions do not have their own `this`.
 - Object methods can lose `this` when passed as callbacks.
+- `call` and `apply` call immediately with a chosen `this`.
+- `bind` returns a new function with fixed `this`.
+- `bind(null)` is commonly used for partial application when `this` is not needed.
+- Synchronous code runs before asynchronous callbacks.
+- In Node.js, `process.nextTick()` runs before Promise microtasks.
+- Promise microtasks and `async/await` continuations run before timers.
+- `setImmediate()` runs in the check phase.

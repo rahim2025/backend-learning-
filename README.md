@@ -35,6 +35,16 @@ Notes:
 - [Promise Interview Questions](promise%20&%20async-await/08-interview-questions/interview-questions.md)
 - [Promise Cheat Sheet](promise%20&%20async-await/09-cheat-sheet/README.md)
 
+### Function Declaration vs Function Expression
+
+Function declarations and function expressions behave differently with hoisting. This matters for interviews and for reading backend JavaScript code safely.
+
+Notes:
+
+- [Function Declaration vs Function Expression](function%20expression/)
+- [Function Expression Interview Questions](function%20expression/05-interview-questions/interview-questions.md)
+- [Function Expression Cheat Sheet](function%20expression/06-cheat-sheet/README.md)
+
 ## Why I Am Building This
 
 I am using this repository to prepare for backend software engineering interviews and to improve my practical JavaScript backend skills.

@@ -45,6 +45,16 @@ Notes:
 - [Function Expression Interview Questions](function%20expression/05-interview-questions/interview-questions.md)
 - [Function Expression Cheat Sheet](function%20expression/06-cheat-sheet/README.md)
 
+### Node.js
+
+Node.js lets JavaScript run outside the browser and is commonly used for backend servers, APIs, real-time apps, and developer tools.
+
+Notes:
+
+- [Node.js](node%20js/)
+- [Node.js Interview Questions](node%20js/06-interview-questions/interview-questions.md)
+- [Node.js Cheat Sheet](node%20js/07-cheat-sheet/README.md)
+
 ## Why I Am Building This
 
 I am using this repository to prepare for backend software engineering interviews and to improve my practical JavaScript backend skills.

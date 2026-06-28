@@ -53,6 +53,37 @@ libuv helps with:
 - Thread pool
 - Cross-platform async behavior
 
+## Modules
+
+```txt
+Module = reusable code in a separate file or package
+```
+
+Types:
+
+| Type | Examples |
+| --- | --- |
+| Core module | `fs`, `path`, `http` |
+| Local module | `./logger`, `./userService` |
+| Third-party module | `express`, `mongoose` |
+
+CommonJS:
+
+```js
+const logger = require("./logger");
+
+module.exports = logger;
+```
+
+ES Modules:
+
+```js
+import logger from "./logger.js";
+
+export default logger;
+export { logger };
+```
+
 ## Mental Model
 
 ```txt
@@ -67,4 +98,3 @@ Node.js runtime
     |
     +--> Node APIs expose fs, http, path, streams
 ```
-

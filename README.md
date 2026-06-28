@@ -52,8 +52,20 @@ Node.js lets JavaScript run outside the browser and is commonly used for backend
 Notes:
 
 - [Node.js](node%20js/)
-- [Node.js Interview Questions](node%20js/06-interview-questions/interview-questions.md)
-- [Node.js Cheat Sheet](node%20js/07-cheat-sheet/README.md)
+- [Node.js Interview Questions](node%20js/07-interview-questions/interview-questions.md)
+- [Node.js Cheat Sheet](node%20js/08-cheat-sheet/README.md)
+
+### Object-Oriented Programming in JavaScript
+
+OOP organizes related data and behavior inside objects. JavaScript uses factory functions, constructor functions, and prototypes to create and share behavior between objects.
+
+Notes:
+
+- [Object-Oriented Programming in JavaScript](oop%20in%20js/)
+- [What Is OOP?](oop%20in%20js/01-what-is-oop/README.md)
+- [Factory Functions](oop%20in%20js/02-factory-functions/README.md)
+- [Constructor Functions](oop%20in%20js/03-constructor-functions/README.md)
+- [Prototypes](oop%20in%20js/04-prototypes/README.md)
 
 ## Why I Am Building This
 

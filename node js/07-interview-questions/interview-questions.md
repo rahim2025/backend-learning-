@@ -27,4 +27,3 @@ V8 executes JavaScript code. libuv handles the event loop and async I/O. Node.js
 ## Q: Does V8 handle file system operations?
 
 No. V8 runs JavaScript code. File system APIs are provided by Node.js, and asynchronous file operations are supported by libuv behind the scenes.
-

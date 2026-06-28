@@ -1,6 +1,6 @@
 # Node.js
 
-This folder contains backend interview notes about Node.js: what it is, how it differs from JavaScript, what it is commonly used for, and the roles of V8 and libuv.
+This folder contains backend interview notes about Node.js: what it is, how it differs from JavaScript, what it is commonly used for, the roles of V8 and libuv, and how modules organize Node.js code.
 
 Node.js is important for backend development because it lets developers run JavaScript outside the browser and build servers, APIs, tools, and real-time applications.
 
@@ -11,8 +11,9 @@ Node.js is important for backend development because it lets developers run Java
 3. [Common Uses of Node.js](03-common-uses/README.md)
 4. [What is V8?](04-v8/README.md)
 5. [What is libuv?](05-libuv/README.md)
-6. [Interview Questions](06-interview-questions/interview-questions.md)
-7. [Cheat Sheet](07-cheat-sheet/README.md)
+6. [Node.js Modules](06-modules/README.md)
+7. [Interview Questions](07-interview-questions/interview-questions.md)
+8. [Cheat Sheet](08-cheat-sheet/README.md)
 
 ## 1. What is Node.js?
 
@@ -169,6 +170,43 @@ Node.js exposes the `fs` API.
 
 libuv helps handle the async file operation behind the scenes.
 
+## 6. Node.js Modules
+
+A module is reusable code kept in a separate file or package.
+
+Modules help organize backend code into smaller files with clear responsibilities.
+
+Simple definition:
+
+```txt
+Module = reusable code in a separate file or package
+```
+
+Types of modules:
+
+| Type | Meaning | Examples |
+| --- | --- | --- |
+| Core module | Built into Node.js | `fs`, `path`, `http` |
+| Local module | Your own file | `./userService`, `./utils/logger` |
+| Third-party module | Installed from npm | `express`, `mongoose`, `jsonwebtoken` |
+
+CommonJS:
+
+```js
+const logger = require("./logger");
+
+module.exports = logger;
+```
+
+ES Modules:
+
+```js
+import logger from "./logger.js";
+
+export default logger;
+export { logger };
+```
+
 ## How Node.js Fits Together
 
 ```txt
@@ -189,4 +227,3 @@ Node.js runtime
 A strong interview answer:
 
 > Node.js is a JavaScript runtime that allows JavaScript to run outside the browser, mainly for backend development. JavaScript is the language, while Node.js is the environment that runs it and provides server-side APIs like `fs`, `http`, and `path`. Node.js is commonly used for APIs, real-time apps, microservices, command-line tools, and I/O-heavy backend systems. V8 executes JavaScript code, while libuv provides the event loop and asynchronous I/O support.
-

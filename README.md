@@ -57,7 +57,7 @@ Notes:
 
 ### Object-Oriented Programming in JavaScript
 
-OOP organizes related data and behavior inside objects. JavaScript uses factory functions, constructor functions, and prototypes to create and share behavior between objects.
+OOP organizes related data and behavior inside objects. JavaScript uses factory functions, constructor functions, prototypes, and classes to create objects and share behavior, while encapsulation protects internal state.
 
 Notes:
 
@@ -66,6 +66,13 @@ Notes:
 - [Factory Functions](oop%20in%20js/02-factory-functions/README.md)
 - [Constructor Functions](oop%20in%20js/03-constructor-functions/README.md)
 - [Prototypes](oop%20in%20js/04-prototypes/README.md)
+- [Classes](oop%20in%20js/05-classes/README.md)
+- [Encapsulation](oop%20in%20js/06-encapsulation/README.md)
+- [Inheritance, super, and Method Overriding](oop%20in%20js/07-inheritance-super-method-overriding/README.md)
+- [Polymorphism](oop%20in%20js/08-polymorphism/README.md)
+- [Abstraction](oop%20in%20js/09-abstraction/README.md)
+- [Composition](oop%20in%20js/10-composition/README.md)
+- [Polymorphism with Composition](oop%20in%20js/11-polymorphism-with-composition/README.md)
 
 ## Why I Am Building This
 

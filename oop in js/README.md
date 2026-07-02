@@ -17,6 +17,8 @@ JavaScript is a prototype-based language. It can still use familiar OOP ideas su
 9. [Abstraction](09-abstraction/README.md)
 10. [Composition](10-composition/README.md)
 11. [Polymorphism with Composition](11-polymorphism-with-composition/README.md)
+12. [Static Methods and Instance Methods](12-static-and-instance-methods/README.md)
+13. [Dependency Injection](13-dependency-injection/README.md)
 
 ## The Main Idea
 

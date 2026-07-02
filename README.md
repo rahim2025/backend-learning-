@@ -73,6 +73,8 @@ Notes:
 - [Abstraction](oop%20in%20js/09-abstraction/README.md)
 - [Composition](oop%20in%20js/10-composition/README.md)
 - [Polymorphism with Composition](oop%20in%20js/11-polymorphism-with-composition/README.md)
+- [Static Methods and Instance Methods](oop%20in%20js/12-static-and-instance-methods/README.md)
+- [Dependency Injection](oop%20in%20js/13-dependency-injection/README.md)
 
 ## Why I Am Building This
 

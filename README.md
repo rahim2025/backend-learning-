@@ -76,6 +76,19 @@ Notes:
 - [Static Methods and Instance Methods](oop%20in%20js/12-static-and-instance-methods/README.md)
 - [Dependency Injection](oop%20in%20js/13-dependency-injection/README.md)
 
+### Data Modeling and Database Schema Design
+
+Data modeling helps convert real-world backend requirements into database structures such as entities, tables, columns, primary keys, foreign keys, and candidate keys.
+
+Notes:
+
+- [Data Modeling and Database Schema Design](data%20modeling/)
+- [Entities](data%20modeling/01-entities/README.md)
+- [Tables, Rows, Columns](data%20modeling/02-tables-rows-columns/README.md)
+- [Primary Keys](data%20modeling/03-primary-keys/README.md)
+- [Foreign Keys](data%20modeling/04-foreign-keys/README.md)
+- [Candidate Keys](data%20modeling/05-candidate-keys/README.md)
+
 ## Why I Am Building This
 
 I am using this repository to prepare for backend software engineering interviews and to improve my practical JavaScript backend skills.

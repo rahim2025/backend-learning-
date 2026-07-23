@@ -23,6 +23,10 @@ Data modeling = planning entities, tables, columns, keys, and relationships befo
 3. [Primary Keys](03-primary-keys/README.md)
 4. [Foreign Keys](04-foreign-keys/README.md)
 5. [Candidate Keys](05-candidate-keys/README.md)
+6. [Constraints](06-constraints/README.md)
+7. [Relationships](07-relationships/README.md)
+8. [Normalization: 1NF and 2NF](08-normalization-1nf-2nf/README.md)
+9. [Normalization: 3NF](09-normalization-3nf/README.md)
 
 ## Why Data Modeling Matters
 
@@ -68,6 +72,9 @@ Column      -> one attribute of the entity
 Primary Key -> unique identity of each row
 Foreign Key -> connection between two tables
 Candidate Key -> possible unique identifier for a row
+Constraint  -> rule that protects data integrity
+Relationship -> connection pattern between tables
+Normalization -> organizing tables to reduce redundancy
 ```
 
 ## Example Model
